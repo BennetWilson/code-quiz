@@ -29,7 +29,9 @@ I have eventListeners for all buttons that would be displayed to the user.
 I have all the functions used laid out in order and their descriptions commented above them.
 
 ### Links
-![alt text]
+[a link](https://bennetwilson.github.io/04-homework/)
+
+[a link](https://github.com/BennetWilson/04-homework)
 
 ### Images
-
+![deployedQuiz](https://user-images.githubusercontent.com/90366376/146094830-56a530e2-91ca-4b3d-8111-2806ca902be3.PNG)
