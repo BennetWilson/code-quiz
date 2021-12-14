@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./Assets/css/style.css" />
+    <title>Code Quiz</title>
+  </head>
+  <body>
+
+   <!-- Header -->
+    <div class="headerContainer">
+        <div class="row">
+            <div id= "viewScores">View Highscores</div>
+            <div id = "timerPosition">Time: <span id="timer">0</span></div>
+        </div>
+    </div>
+   <!-- end of header -->
+
+   <!-- Jumbotron -->
+    <div class="containerJT">
+        <div class="jumbotron">
+
+            <!-- welcome -->
+            <div class="container" id="welcome">
+                <h1 class="h1">Coding Quiz</h1>
+                <p>Try your best to answer the following coding questions!  <br>Incorrect answers will penalize your time.</p>
+                <button type="button" class="startButton" id="startQuiz">Start</button>
+            </div>
+
+            <!-- Quiz -->
+            <div class="container" id="quiz">
+                <h1 class="questions"></h1>
+                <div class="container" id="answers"></div>
+                    <div class="row">
+                        <button type="button" id="0"></button>
+                    </div>
+                    <div class="row">
+                        <button type="button" id="1"></button>
+                    </div>
+                    <div class="row">
+                        <button type="button" id="2"></button>
+                    </div>
+                    <div class="row">
+                        <button type="button" id="3"></button>
+                    </div>
+            </div>
+        </div>
+
+            <!-- Input High Scores -->
+            <div class="container" id="inputScore">
+                <h1>Nice!</h1>
+                <p>Your Score: </p>
+                <p>Enter first name: </p>
+                <button type="button id="submitName>Submit</button>
+            </div>
+            
+            <!-- View High Scores -->
+            <div class="container" id="highScores">
+                <h1>Highscores</h1>
+                <div class="container" id="scores"></div>
+                <button type="button" id="goBack">Go Back</button>
+                <button type="button" id="clearScores">Clear Scores.</button>
+            </div>
+    </div>
+   <!-- end of Jumbotron -->
+    <script src="./Assets/js/questions.js"></script>
+    <script src="./Assets/js/script.js"></script>
+  </body>
+</html>
