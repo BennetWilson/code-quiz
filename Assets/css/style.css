@@ -1,19 +1,38 @@
-.container {
+.container1 {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 #viewScores {
 position: absolute;
-left: 100px;
+left: 500px;
 width: 300px;
 font-size:xx-large;
 font-weight: bold;
 }
 #timerPosition  {
 position: absolute;
-right:100px;
+right:500px;
 width: 200px;
 font-size: xx-large;
 font-weight: bold;
+}
+.container1 .questionsContainer {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+    
+}
+.jumbotron1 {
+    background-color: white;
+}
+#welcome, #quiz, #inputScore, #highScores {
+    width: 75%
+}
+#quiz, #inputScore, #highScores {
+    display: none;
+}
+.row1 {
+    background-color: black;
 }

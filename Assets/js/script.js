@@ -5,12 +5,19 @@ var backButton = document.querySelector("#goBack");
 var timeGiven = 5;
 var timeElapsed = 0;
 var welcomeEl = document.querySelector("#welcome");
-var questionEl = document.querySelector("#questions");
+var questionEl = document.querySelector(".questions");
 var quizEl = document.querySelector("#quiz");
 var answersEl = document.querySelector("#answers");
-var userScore = document.querySelector("#score");
+// scores
+var userScoreEl = document.querySelector("#score");
 var inputScoreEl = document.querySelector("#inputScore");
 var highScoresButton = document.querySelector("#viewScores");
+var highScoresEl = document.querySelector("#highScores");
+var actualHighscores = document.querySelector("score");
+// end scores
+var initials = document.querySelector("#submitName");
+var scores = [];
+
 // questions
 var questions = [
     {
@@ -69,7 +76,7 @@ function nextQuestion() {
     stopTimer();
     if ((timeGiven - timeElapsed) > 0)
     score += (timeGiven - timeElapsed);
-  userScore.textContent = score;
+  userScoreEl.textContent = score;
   hide(quizEl);
   display(inputScoreEl);
   gameTimer.textContent = 0;
@@ -82,23 +89,23 @@ if (questions[currentQ].answer == questions[currentQ].choices[answer.id]) {
   score += 5;
   displayMessage("Correct!");
 } else {
-  timeElapsed =+10;
+  timeElapsed -=10;
   displayMessage("Incorrect :(");
 }
 }
 
 // displays a message for 5 seconds
-function displayMessage(m) {
-  let messageHr = document.createElement("hr");
-  let messageEl = document.createElement("div")
-  messageEl.textContent = m;
-  document.querySelector(".jumbotron").appendChild(messageHr);
-  document.querySelector(".jumbotron").appendChild(messageEl);
-  setTimeout(function() {
-    messageHr.remove();
-    messageEl.remove();
-  }, 5000);
-}
+// function displayMessage(m) {
+//   let messageHr = document.createElement("hr");
+//   let messageEl = document.createElement("div")
+//   messageEl.textContent = m;
+//   document.querySelector(".jumbotron").appendChild(messageHr);
+//   document.querySelector(".jumbotron").appendChild(messageEl);
+//   setTimeout(function() {
+//     messageHr.remove();
+//     messageEl.remove();
+//   }, 5000);
+// }
 // hide element
 function hide(element) {
   element.style.display = "none";
@@ -121,16 +128,26 @@ function reset() {
 
 // renders question
 function renderQuestion() {
-  questionEl.textContent = questions[currentQ].title;
+  questionEl.innerHTML = questions[currentQ].title;
   for (i = 0; i < answersEl.children.length; i++) {
-    answersEl.children[i].children[0].textContent = `${i + 1}; ${
-      questions[currentQ.choices[i]]
-    }`;
+    answersEl.children[i].children[0].textContent = `${(i + 1)}: ${questions[currentQ].choices[i]}`;
   }
 }
 
 // highscores
-function renderHighscores() {}
+function renderHighscores() {
+  score.innerHTML = "";
+  display(highScoresEl);
+  scores = JSON.parse(localStorage.getItem("scores"));
+  for (let i = 0; i < scores.length; i ++) {
+    let scoreItem = document.createElement("div");
+    scoreItem.className += "row mb-3 p-2";
+    console.log(scoreItem);
+    scoreItem.setAttribute("style", "background-color:LightBlue;");
+    scoreItem.textContent = `${(i + 1)}. ${scores[i].username} - ${scores[i].userScore}`;
+    score.appendChild(scoreItem);
+  }
+}
 
 // ==================== event listeners ===================
 
@@ -150,4 +167,40 @@ startButton.addEventListener("click", function () {
   startTimer();
   renderQuestion();
   display(quizEl);
+});
+
+// Check scores
+ answersEl.addEventListener("click", function (e) {
+   if (e.target.matches("button")) {
+     checkAnswer(e.target);
+     console.log(e.target);
+     nextQuestion;
+   }
+ });
+
+// high score button local storage
+highScoresButton.addEventListener("click", function() {
+  let initValue = initials.value.trim();
+  if (initValue) {
+    let userScore = {username: initValue, userScore: score};
+    initials.value = '';
+    scores = JSON.parse(localStorage.getItem("scores")) || [];
+    scores.push(userScore)
+    localStorage.setItem("scores", JSON.stringify(scores));
+    hide(inputScoreEl);
+    renderHighscores;
+    reset();
+  }
+});
+// back button
+backButton.addEventListener("click", function() {
+  hide(highScoresEl);
+  display(welcomeEl);
+});
+
+// clear saved scores button
+clearScoresButton.addEventListener("click", function() {
+  actualHighscores = [];
+  localStorage.setItem("scores", JSON.stringify(actualHighscores));
+  renderHighscores();
 });
