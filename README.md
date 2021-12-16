@@ -37,3 +37,7 @@ The quiz is fully functional thanks to help from my tutor.
 
 ### Images
 ![deployedQuiz](https://user-images.githubusercontent.com/90366376/146094830-56a530e2-91ca-4b3d-8111-2806ca902be3.PNG)
+![deployed1](https://user-images.githubusercontent.com/90366376/146315332-1b7df9dd-d3ae-45d1-8ab2-1295b80c0431.PNG)
+![end of quiz](https://user-images.githubusercontent.com/90366376/146315371-6b26071e-f80b-4452-b767-4fbe62c2d650.PNG)
+![scores](https://user-images.githubusercontent.com/90366376/146315391-a5b6d411-6201-48fa-8741-a85e06a39d2c.PNG)
+
