@@ -28,7 +28,7 @@ I have eventListeners for all buttons that would be displayed to the user.
 
 I have all the functions used laid out in order and their descriptions commented above them.
 
-The quiz is still not fully functional. I did the best that I could but I just can't figure out what my issue is.
+The quiz is fully functional thanks to help from my tutor.
 
 ### Links
 [a link](https://bennetwilson.github.io/04-homework/)

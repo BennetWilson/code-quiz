@@ -2,7 +2,7 @@ var gameTimer = document.querySelector("#timer");
 var startButton = document.querySelector("#startQuiz");
 var clearScoresButton = document.querySelector("#clearScores");
 var backButton = document.querySelector("#goBack");
-var timeGiven = 5;
+
 var timeElapsed = 0;
 var welcomeEl = document.querySelector("#welcome");
 var questionEl = document.querySelector(".questions");
@@ -15,8 +15,9 @@ var highScoresButton = document.querySelector("#viewScores");
 var highScoresEl = document.querySelector("#highScores");
 var actualHighscores = document.querySelector("score");
 // end scores
-var initials = document.querySelector("#submitName");
+var saveBtnEl = document.querySelector("#submitName");
 var scores = [];
+var initialEl = document.querySelector("#initials")
 
 // questions
 var questions = [
@@ -42,7 +43,7 @@ var questions = [
     }
 ];
 // questions
-
+var timeGiven = questions.length * 15;
 var interval;
 var highScore = 0;
 var score = 0;
@@ -51,13 +52,14 @@ var currentQ = 0;
 
 // Start timer
 function startTimer() {
-  var interval = setInterval(function () {
-    timeGiven--;
+  interval = setInterval(function () {
     gameTimer.textContent = timeGiven;
+   
     if (timeGiven === 0) {
       clearInterval(interval);
       nextQuestion;
     }
+    timeGiven--;
   }, 1000);
 }
 
@@ -86,26 +88,24 @@ function nextQuestion() {
 // checks answer and updates user score
 function checkAnswer(answer) {
 if (questions[currentQ].answer == questions[currentQ].choices[answer.id]) {
-  score += 5;
   displayMessage("Correct!");
 } else {
-  timeElapsed -=10;
+  timeGiven -=15;
   displayMessage("Incorrect :(");
 }
 }
 
 // displays a message for 5 seconds
-// function displayMessage(m) {
-//   let messageHr = document.createElement("hr");
-//   let messageEl = document.createElement("div")
-//   messageEl.textContent = m;
-//   document.querySelector(".jumbotron").appendChild(messageHr);
-//   document.querySelector(".jumbotron").appendChild(messageEl);
-//   setTimeout(function() {
-//     messageHr.remove();
-//     messageEl.remove();
-//   }, 5000);
-// }
+function displayMessage(m) {
+  document.querySelector("#message").textContent=""
+  let messageHr = document.createElement("hr");
+  let messageEl = document.createElement("div")
+  messageEl.textContent = m;
+  document.querySelector("#message").appendChild(messageHr);
+  document.querySelector("#message").appendChild(messageEl);
+  setTimeout(renderQuestion,
+   500);
+}
 // hide element
 function hide(element) {
   element.style.display = "none";
@@ -129,9 +129,42 @@ function reset() {
 // renders question
 function renderQuestion() {
   questionEl.innerHTML = questions[currentQ].title;
-  for (i = 0; i < answersEl.children.length; i++) {
-    answersEl.children[i].children[0].textContent = `${(i + 1)}: ${questions[currentQ].choices[i]}`;
-  }
+  answersEl.innerHTML = `<div class="row1">
+  <button type="button" class = "choiceBtn" id="0">${questions[currentQ].choices[0]}</button>
+</div>
+<div class="row1">
+  <button type="button" class = "choiceBtn" id="1">${questions[currentQ].choices[1]}</button>
+</div>
+<div class="row1">
+  <button type="button" class = "choiceBtn" id="2">${questions[currentQ].choices[2]}</button>
+</div>
+<div class="row1">
+  <button type="button" class = "choiceBtn" id="3">${questions[currentQ].choices[3]}</button>
+</div> 
+<p id = "message"></p>
+`
+var choiceBtn = document.querySelectorAll(".choiceBtn");
+for (let i = 0; i < choiceBtn.length; i++) {
+  choiceBtn[i].addEventListener("click", function(){
+    currentQ++;
+    if (currentQ < questions.length) {
+        if (this.textContent === questions[currentQ-1].answer){
+          displayMessage("Correct :)")
+        }
+        else {
+          displayMessage("Incorrect :(")
+        }
+    }
+   else {
+     clearInterval(interval);
+     hide(quizEl);
+     display(inputScoreEl);
+   }
+  })
+}
+  // for (i = 0; i < answersEl.children.length; i++) {
+  //   answersEl.children[i].children[0].textContent = `${(i + 1)}: ${questions[currentQ].choices[i]}`;
+  // }
 }
 
 // highscores
@@ -145,7 +178,7 @@ function renderHighscores() {
     console.log(scoreItem);
     scoreItem.setAttribute("style", "background-color:LightBlue;");
     scoreItem.textContent = `${(i + 1)}. ${scores[i].username} - ${scores[i].userScore}`;
-    score.appendChild(scoreItem);
+    userScoreEl.appendChild(scoreItem);
   }
 }
 
@@ -179,16 +212,16 @@ startButton.addEventListener("click", function () {
  });
 
 // high score button local storage
-highScoresButton.addEventListener("click", function() {
-  let initValue = initials.value.trim();
+saveBtnEl.addEventListener("click", function() {
+  let initValue = initialEl.value.trim();
   if (initValue) {
-    let userScore = {username: initValue, userScore: score};
+    let userScore = {username: initValue, userScore: timeGiven};
     initials.value = '';
     scores = JSON.parse(localStorage.getItem("scores")) || [];
     scores.push(userScore)
     localStorage.setItem("scores", JSON.stringify(scores));
     hide(inputScoreEl);
-    renderHighscores;
+    renderHighscores();
     reset();
   }
 });
